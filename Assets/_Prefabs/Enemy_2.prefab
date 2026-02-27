@@ -56,7 +56,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.2
+  m_Radius: 1.5
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -67,10 +67,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4070209521177695457}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -117,12 +117,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c99fab975feb4c0caca1e6e2b108867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  fireRate: 0.3
-  health: 10
-  score: 100
+  speed: 15
+  fireRate: 0.5
+  health: 5
+  score: 50
+  powerUpDropChance: 0.75
   lifeTime: 10
-  sinEccentricity: 0.6
+  sinEccentricity: 0.5
   rotCurve:
     serializedVersion: 2
     m_Curve:
