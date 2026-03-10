@@ -79,6 +79,11 @@ public class Enemy : MonoBehaviour
                     }
                     // Destroy this Enemy
                     Destroy(this.gameObject);
+                    Main main = Main.Get();
+                    if (main != null)
+                    {
+                        main.AddScore(score);
+                    }
                 }
             }
             // Destroy the ProjectileHero regardless

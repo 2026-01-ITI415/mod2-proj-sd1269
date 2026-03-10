@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(BoundsCheck))]
 public class Main : MonoBehaviour
@@ -21,6 +22,9 @@ public class Main : MonoBehaviour
         eWeaponType.blaster, eWeaponType.blaster,
         eWeaponType.spread,  eWeaponType.shield
     };
+    [Header("Score")]
+    public int score = 0;
+    public Text scoreText;
 
     private BoundsCheck bndCheck;
 
@@ -34,6 +38,7 @@ public class Main : MonoBehaviour
         {
             WEAP_DICT[def.type] = def;
         }
+        ResetScore();
     }
 
     public GameObject SpawnEnemyFromWave(GameObject enemyPrefab)
@@ -60,6 +65,26 @@ public class Main : MonoBehaviour
         go.transform.position = pos;
 
         return go;
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount;
+        UpdateScoreUI();
+    }
+
+    public void ResetScore()
+    {
+        score = 0;
+        UpdateScoreUI();
+    }
+
+    private void UpdateScoreUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + score;
+        }
     }
 
     public GameObject SpawnRandomEnemy()

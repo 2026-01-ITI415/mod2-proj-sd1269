@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
 {
@@ -20,8 +20,8 @@ public class WaveManager : MonoBehaviour
     public bool autoStart = true;
 
     [Header("UI")]
-    public TextMeshProUGUI waveText;
-    public TextMeshProUGUI messageText;
+    public Text waveText;
+    public Text messageText;
     public float messageDuration = 2f;
 
     private int currentWaveIndex = -1;
