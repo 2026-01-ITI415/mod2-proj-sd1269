@@ -1004,10 +1004,10 @@ MonoBehaviour:
     weaponModelPrefab: {fileID: 919132149155446097, guid: 0522e2d6add5631469273543744ebf7f, type: 3}
     projectilePrefab: {fileID: 8884485313326729009, guid: 93cdb1254cc5842aeb5402d7b9f73a99, type: 3}
     projectileColor: {r: 1, g: 0, b: 0, a: 1}
-    damageOnHit: 0
-    damagePerSec: 5
-    delayBetweenShots: 0.25
-    velocity: 50
+    damageOnHit: 0.25
+    damagePerSec: 0.25
+    delayBetweenShots: 0.001
+    velocity: 180
   - type: 4
     letter: M
     powerUpColor: {r: 1, g: 0.629496, b: 0, a: 1}

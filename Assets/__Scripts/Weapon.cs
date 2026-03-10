@@ -22,6 +22,7 @@ public enum eWeaponType
 /// of a specific weapon in the Inspector.
 /// </summary>
 [System.Serializable]
+
 public class WeaponDefinition
 {
     public eWeaponType type = eWeaponType.none;
@@ -65,7 +66,7 @@ public class Weapon : MonoBehaviour
 
     public WeaponDefinition def;
     public float nextShotTime;
-
+    
     private GameObject weaponModel;
     private Transform shotPointTrans;
 
@@ -141,24 +142,22 @@ public class Weapon : MonoBehaviour
                 break;
 
             case eWeaponType.phaser:
-                // Fire like a blaster, but ProjectileHero should make it wave.
                 p = MakeProjectile();
                 p.vel = vel;
                 break;
 
             case eWeaponType.missile:
-                // Fire straight up initially. ProjectileHero should home afterward.
                 p = MakeProjectile();
                 p.vel = vel;
                 break;
 
             case eWeaponType.laser:
-                FireLaser();
+                p = MakeProjectile();
+                p.vel = vel;
                 break;
 
             case eWeaponType.shield:
-                // Shield is not a fired weapon.
-                // Usually handled when the player picks up the shield powerup.
+                // Shield is handled as a pickup effect, not a fired projectile.
                 break;
         }
     }
@@ -168,22 +167,6 @@ public class Weapon : MonoBehaviour
         ProjectileHero p = MakeProjectile();
         p.transform.rotation = Quaternion.AngleAxis(angle, Vector3.back);
         p.vel = p.transform.rotation * (Vector3.up * def.velocity);
-    }
-
-    private void FireLaser()
-    {
-        // Basic version: instantiate a laser prefab if one exists.
-        // Your laser prefab should contain its own script for duration/damage ticking.
-        if (def.projectilePrefab == null) return;
-
-        GameObject go = Instantiate(def.projectilePrefab, PROJECTILE_ANCHOR);
-
-        Vector3 pos = shotPointTrans.position;
-        pos.z = 0;
-        go.transform.position = pos;
-        go.transform.rotation = Quaternion.identity;
-
-        nextShotTime = Time.time + def.delayBetweenShots;
     }
 
     private ProjectileHero MakeProjectile()

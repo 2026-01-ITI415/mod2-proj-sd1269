@@ -21,9 +21,15 @@ public class ProjectileHero : MonoBehaviour
     [Header("Missile Settings")]
     public float missileTurnRate = 240f;
 
+    [Header("Impact Effects")]
+    public GameObject missileImpactPrefab;
+    public float impactEffectLifetime = 2f;
+
     private float birthTime;
     private float x0;
+    private bool hasImpacted = false;
 
+    // This public property masks the private field _type
     public eWeaponType type
     {
         get { return _type; }
@@ -65,13 +71,24 @@ public class ProjectileHero : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets the _type private field and colors this projectile to match the 
+    /// WeaponDefinition.
+    /// </summary>
     public void SetType(eWeaponType eType)
     {
         _type = eType;
+
         WeaponDefinition def = Main.GET_WEAPON_DEFINITION(_type);
-        rend.material.color = def.projectileColor;
+        if (def != null && rend != null)
+        {
+            rend.material.color = def.projectileColor;
+        }
     }
 
+    /// <summary>
+    /// Allows Weapon to easily set the velocity of this ProjectileHero
+    /// </summary>
     public Vector3 vel
     {
         get { return rigid.linearVelocity; }
@@ -94,7 +111,13 @@ public class ProjectileHero : MonoBehaviour
 
         Vector3 currentVel = vel;
         float speed = currentVel.magnitude;
-        if (speed <= 0.01f) speed = Main.GET_WEAPON_DEFINITION(type).velocity;
+
+        if (speed <= 0.01f)
+        {
+            WeaponDefinition def = Main.GET_WEAPON_DEFINITION(type);
+            if (def != null) speed = def.velocity;
+            else speed = 20f;
+        }
 
         Vector3 desiredVel = dir * speed;
 
@@ -134,5 +157,51 @@ public class ProjectileHero : MonoBehaviour
         }
 
         return closest;
+    }
+
+    private void SpawnImpactEffect()
+    {
+        if (type != eWeaponType.missile) return;
+        if (missileImpactPrefab == null) return;
+
+        GameObject fx = Instantiate(missileImpactPrefab, transform.position, Quaternion.identity);
+        Destroy(fx, impactEffectLifetime);
+    }
+
+    private void HandleMissileImpact(Collider other)
+    {
+        if (hasImpacted) return;
+        if (type != eWeaponType.missile) return;
+
+        Enemy enemy = other.GetComponentInParent<Enemy>();
+        if (enemy == null) return;
+
+        hasImpacted = true;
+        Debug.Log("Missile impacted enemy: " + enemy.name);
+        SpawnImpactEffect();
+        Destroy(gameObject);
+    }
+
+    private void HandleMissileImpact(Collision collision)
+    {
+        if (hasImpacted) return;
+        if (type != eWeaponType.missile) return;
+
+        Enemy enemy = collision.collider.GetComponentInParent<Enemy>();
+        if (enemy == null) return;
+
+        hasImpacted = true;
+        SpawnImpactEffect();
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        HandleMissileImpact(other);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        HandleMissileImpact(collision);
     }
 }
