@@ -825,8 +825,6 @@ MonoBehaviour:
   - {fileID: 2103876059}
   - {fileID: 980067140}
   - {fileID: 781726980}
-  - {fileID: 781726980}
-  - {fileID: 781726980}
   _shieldLevel: 1
 --- !u!114 &930863984
 MonoBehaviour:
@@ -954,7 +952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnEnemies: 1
   prefabEnemies:
-  - {fileID: 9185519998980853174, guid: 486b535a9aae8446f9346d286631b31d, type: 3}
+  - {fileID: 0}
   enemySpawnPerSecond: 1
   enemyInsetDefault: 1.5
   gameRestartDelay: 2
@@ -990,7 +988,37 @@ MonoBehaviour:
     damagePerSec: 0
     delayBetweenShots: 0
     velocity: 50
-  powerUpFrequency: 01000000010000000200000006000000
+  - type: 3
+    letter: P
+    powerUpColor: {r: 0.7936082, g: 0, b: 1, a: 1}
+    weaponModelPrefab: {fileID: 919132149155446097, guid: 2b917555367b8f64fab39ba6974870f3, type: 3}
+    projectilePrefab: {fileID: 8884485313326729009, guid: 93cdb1254cc5842aeb5402d7b9f73a99, type: 3}
+    projectileColor: {r: 0.9487314, g: 0, b: 1, a: 1}
+    damageOnHit: 5
+    damagePerSec: 0
+    delayBetweenShots: 0.5
+    velocity: 50
+  - type: 5
+    letter: L
+    powerUpColor: {r: 1, g: 0, b: 0.11098671, a: 1}
+    weaponModelPrefab: {fileID: 919132149155446097, guid: 0522e2d6add5631469273543744ebf7f, type: 3}
+    projectilePrefab: {fileID: 8884485313326729009, guid: 93cdb1254cc5842aeb5402d7b9f73a99, type: 3}
+    projectileColor: {r: 1, g: 0, b: 0, a: 1}
+    damageOnHit: 0
+    damagePerSec: 5
+    delayBetweenShots: 0.25
+    velocity: 50
+  - type: 4
+    letter: M
+    powerUpColor: {r: 1, g: 0.629496, b: 0, a: 1}
+    weaponModelPrefab: {fileID: 919132149155446097, guid: 0b915be395eb1f54c87faeaabb622d10, type: 3}
+    projectilePrefab: {fileID: 8884485313326729009, guid: 93cdb1254cc5842aeb5402d7b9f73a99, type: 3}
+    projectileColor: {r: 1, g: 0.6313726, b: 0, a: 1}
+    damageOnHit: 25
+    damagePerSec: 0
+    delayBetweenShots: 3
+    velocity: 50
+  powerUpFrequency: 0100000001000000020000000200000006000000030000000500000004000000
   score: 0
   scoreText: {fileID: 228408431}
 --- !u!114 &963194230
