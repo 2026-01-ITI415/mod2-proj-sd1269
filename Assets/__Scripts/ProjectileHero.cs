@@ -21,8 +21,12 @@ public class ProjectileHero : MonoBehaviour
     [Header("Missile Settings")]
     public float missileTurnRate = 240f;
 
+    [Header("Missile Explosion")]
+    public GameObject missileExplosionPrefab;
+
     private float birthTime;
     private float x0;
+    private bool spawnedExplosion = false;
 
     public eWeaponType type
     {
@@ -134,5 +138,32 @@ public class ProjectileHero : MonoBehaviour
         }
 
         return closest;
+    }
+
+    private void OnDestroy()
+    {
+        if (!Application.isPlaying) return;
+        if (spawnedExplosion) return;
+        if (type != eWeaponType.missile) return;
+        if (missileExplosionPrefab == null) return;
+
+        spawnedExplosion = true;
+
+        GameObject explosion = Instantiate(
+            missileExplosionPrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
+        if (ps != null)
+        {
+            float life = ps.main.duration + ps.main.startLifetime.constantMax;
+            Destroy(explosion, life);
+        }
+        else
+        {
+            Destroy(explosion, 2f);
+        }
     }
 }
