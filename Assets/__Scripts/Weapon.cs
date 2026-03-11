@@ -141,26 +141,33 @@ public class Weapon : MonoBehaviour
                 break;
 
             case eWeaponType.phaser:
-                // Fire like a blaster, but ProjectileHero should make it wave.
-                p = MakeProjectile();
-                p.vel = vel;
+                ProjectileHero p0 = MakeProjectile();
+                ProjectileHero p1 = MakeProjectile();
+
+                p0.transform.position += Vector3.left * 0.5f;
+                p1.transform.position += Vector3.right * 0.5f;
+
+                p0.phaserWaveDirection = 1f;
+                p1.phaserWaveDirection = -1f;
+
+                p0.vel = vel;
+                p1.vel = vel;
                 break;
 
             case eWeaponType.missile:
-                // Fire straight up initially. ProjectileHero should home afterward.
                 p = MakeProjectile();
                 p.vel = vel;
                 break;
 
             case eWeaponType.laser:
                 FireLaser();
-                break;
+                return;
 
             case eWeaponType.shield:
-                // Shield is not a fired weapon.
-                // Usually handled when the player picks up the shield powerup.
-                break;
+                return;
         }
+
+        nextShotTime = Time.time + def.delayBetweenShots;
     }
 
     private void FireAngle(float angle)

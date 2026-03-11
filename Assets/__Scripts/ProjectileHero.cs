@@ -17,6 +17,7 @@ public class ProjectileHero : MonoBehaviour
     [Header("Phaser Settings")]
     public float phaserWaveFrequency = 12f;
     public float phaserWaveMagnitude = 0.5f;
+    public float phaserWaveDirection = 1f;
 
     [Header("Missile Settings")]
     public float missileTurnRate = 240f;
@@ -85,7 +86,9 @@ public class ProjectileHero : MonoBehaviour
     private void UpdatePhaser()
     {
         Vector3 pos = transform.position;
-        pos.x = x0 + Mathf.Sin((Time.time - birthTime) * phaserWaveFrequency) * phaserWaveMagnitude;
+        pos.x = x0 + Mathf.Sin((Time.time - birthTime) * phaserWaveFrequency) 
+                    * phaserWaveMagnitude 
+                    * phaserWaveDirection;
         transform.position = pos;
     }
 
