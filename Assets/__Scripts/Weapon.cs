@@ -160,8 +160,9 @@ public class Weapon : MonoBehaviour
                 break;
 
             case eWeaponType.laser:
-                FireLaser();
-                return;
+                p = MakeProjectile();
+                p.vel = vel;
+                break;
 
             case eWeaponType.shield:
                 return;
