@@ -20,7 +20,11 @@ public class Main : MonoBehaviour
     public WeaponDefinition[] weaponDefinitions;
     public eWeaponType[] powerUpFrequency = new eWeaponType[] {
         eWeaponType.blaster, eWeaponType.blaster,
-        eWeaponType.spread,  eWeaponType.shield
+        eWeaponType.spread,
+        eWeaponType.shield,
+        eWeaponType.phaser,
+        eWeaponType.missile,
+        eWeaponType.laser
     };
     [Header("Score")]
     public int score = 0;
