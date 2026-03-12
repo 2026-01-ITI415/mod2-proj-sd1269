@@ -21,13 +21,15 @@ public class ProjectileHero : MonoBehaviour
 
     [Header("Missile Settings")]
     public float missileTurnRate = 240f;
+    [Header("Explosion Visual")]
+    public GameObject explosionPrefab;
 
     [Header("Missile Explosion")]
     public GameObject missileExplosionPrefab;
 
+    private bool hasExploded = false;
     private float birthTime;
     private float x0;
-    private bool spawnedExplosion = false;
 
     public eWeaponType type
     {
@@ -143,30 +145,41 @@ public class ProjectileHero : MonoBehaviour
         return closest;
     }
 
-    private void OnDestroy()
+    public void Explode()
     {
-        if (!Application.isPlaying) return;
-        if (spawnedExplosion) return;
-        if (type != eWeaponType.missile) return;
-        if (missileExplosionPrefab == null) return;
+        if (hasExploded) return;
+        hasExploded = true;
 
-        spawnedExplosion = true;
+        SpawnExplosionEffect();
+        Destroy(gameObject);
+    }
 
-        GameObject explosion = Instantiate(
-            missileExplosionPrefab,
-            transform.position,
+    private void SpawnExplosionEffect()
+    {
+        GameObject prefabToUse = explosionPrefab;
+
+        if (type == eWeaponType.missile && missileExplosionPrefab != null)
+        {
+            prefabToUse = missileExplosionPrefab;
+        }
+
+        if (prefabToUse == null) return;
+
+        GameObject effect = Instantiate(
+            prefabToUse,
+            transform.position + Vector3.up * 0.5f,
             Quaternion.identity
         );
 
-        ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
-        if (ps != null)
-        {
-            float life = ps.main.duration + ps.main.startLifetime.constantMax;
-            Destroy(explosion, life);
-        }
-        else
-        {
-            Destroy(explosion, 2f);
-        }
+        Destroy(effect, 3f); // adjust time to match your particle
+    }
+
+    private void OnDestroy()
+    {
+        if (!Application.isPlaying) return;
+        if (type != eWeaponType.missile) return;
+        if (missileExplosionPrefab == null) return;
+
+        Explode();
     }
 }

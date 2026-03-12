@@ -158,7 +158,9 @@ MonoBehaviour:
   _type: 0
   phaserWaveFrequency: 12
   phaserWaveMagnitude: 0.5
+  phaserWaveDirection: 1
   missileTurnRate: 240
+  explosionPrefab: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
   missileExplosionPrefab: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
 --- !u!114 &-2393177835353120053
 MonoBehaviour:
